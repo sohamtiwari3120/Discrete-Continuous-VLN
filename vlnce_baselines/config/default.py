@@ -18,7 +18,7 @@ _C.TRAINER_NAME = "dagger"
 _C.ENV_NAME = "VLNCEDaggerEnv"
 _C.SIMULATOR_GPU_IDS = [0]
 _C.VIDEO_OPTION = []  # options: "disk", "tensorboard"
-_C.VIDEO_DIR = "videos/debug"
+_C.VIDEO_DIR = "data/videos/"
 _C.TENSORBOARD_DIR = "data/tensorboard_dirs/debug"
 _C.RESULTS_DIR = "data/checkpoints/pretrained/evals"
 

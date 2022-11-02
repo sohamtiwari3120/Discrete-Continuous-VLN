@@ -39,3 +39,5 @@ waypoint_prediction/checkpoints/*
 
 vlnce_baselines/waypoint_pred/*
 !vlnce_baselines/waypoint_pred/.gitkeep
+
+logs/videos

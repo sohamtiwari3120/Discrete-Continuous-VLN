@@ -12,6 +12,11 @@ def extract_instruction_tokens(
     r"""Extracts instruction tokens from an instruction sensor if the tokens
     exist and are in a dict structure.
     """
+    # if (
+    #     instruction_sensor_uuid not in observations[0]
+    #     or instruction_sensor_uuid == "pointgoal_with_gps_compass"
+    # ):
+    #     return observations
     for i in range(len(observations)):
         if (
             isinstance(observations[i][instruction_sensor_uuid], dict)

@@ -29,13 +29,15 @@
 
 
 # # EVALUATION
+export MAGNUM_LOG=quiet
+export GLOG_minloglevel=2
+
 flag="--exp_name cont-cwp-cma-ori
       --run-type eval
       --exp-config run_CMA.yaml
       SIMULATOR_GPU_IDS [0]
       TORCH_GPU_ID 0
       TORCH_GPU_IDS [0]
-      EVAL.SPLIT val_unseen
       EVAL_CKPT_PATH_DIR logs/checkpoints/cont-cwp-cma-ori/cma_ckpt_best.pth
       "
 python run.py $flag

@@ -402,18 +402,24 @@ class CMANet(Net):
             )
 
             ''' language attention using state '''
-            text_state, _ = self.state_text_attn(
+            text_state, text_state_attn = self.state_text_attn(
                 state, instruction, text_mask)
 
             ''' visual attention using attended language '''
-            vis_text_feats, _ = self.text_vis_attn(
+            vis_text_feats, text_attn = self.text_vis_attn(
                 text_state, vis_in, cand_mask)
 
             x = torch.cat((state, vis_text_feats, text_state), dim=1)
             _, logits = self.state_vis_logits(
                         x, vis_in, cand_mask, output_prob=False)
 
-            return logits, rnn_states_out
+            attention = {
+                "text": text_attn.detach().cpu().numpy(), 
+                "text_state": text_state_attn.detach().cpu().numpy(), 
+                # "depth": depth_attn.detach().cpu().numpy()
+            }
+            
+            return logits, rnn_states_out, attention
 
 
 class SoftDotAttention(nn.Module):

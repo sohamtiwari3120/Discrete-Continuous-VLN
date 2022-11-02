@@ -9,11 +9,14 @@ TENSORBOARD_DIR: logs/tensorboard_dirs/
 CHECKPOINT_FOLDER: logs/checkpoints/
 EVAL_CKPT_PATH_DIR: logs/checkpoints/
 RESULTS_DIR: logs/eval_results/
+VIDEO_OPTION: ["disk"]  # options: "disk", "tensorboard"
+VIDEO_DIR: logs/videos/dcvln_bert_r2r
 
 EVAL:
   USE_CKPT_CONFIG: False
   SPLIT: val_unseen
   EPISODE_COUNT: -1
+  SAMPLE: False
 
 IL:
   epochs: 50

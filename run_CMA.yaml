@@ -2,18 +2,21 @@ BASE_TASK_CONFIG_PATH: habitat_extensions/config/vlnce_task.yaml
 SIMULATOR_GPU_IDS: [0]
 TORCH_GPU_ID: 0
 TORCH_GPU_IDS: [0]
-TRAINER_NAME: schedulesampler-CMA
+TRAINER_NAME: schedulesampler-CMA 
 GPU_NUMBERS: 1
 NUM_ENVIRONMENTS: 1
 TENSORBOARD_DIR: logs/tensorboard_dirs/
 CHECKPOINT_FOLDER: logs/checkpoints/
 EVAL_CKPT_PATH_DIR: logs/checkpoints/
 RESULTS_DIR: logs/eval_results/
+VIDEO_OPTION: ["disk"]  # options: "disk", "tensorboard"
+VIDEO_DIR: logs/videos/dcvln_cma_r2r
 
 EVAL:
   USE_CKPT_CONFIG: False
   SPLIT: val_unseen
   EPISODE_COUNT: -1
+  SAMPLE: False
 
 IL:
   epochs: 50

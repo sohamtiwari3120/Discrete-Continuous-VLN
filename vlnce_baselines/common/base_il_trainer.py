@@ -18,7 +18,7 @@ from copy import deepcopy
 import tqdm
 from gym import Space
 from habitat import Config, logger
-from habitat.utils.visualizations.utils import append_text_to_image
+# from habitat.utils.visualizations.utils import append_text_to_image
 from habitat_baselines.common.base_il_trainer import BaseILTrainer
 from habitat_baselines.common.baseline_registry import baseline_registry
 from habitat_baselines.common.environments import get_env_class
@@ -47,7 +47,7 @@ from vlnce_baselines.common.utils import *
 from habitat_extensions.measures import NDTW
 from fastdtw import fastdtw
 
-from ..utils import get_camera_orientations
+from ..utils import get_camera_orientations, append_text_to_image
 from ..models.utils import (
     length2mask, dir_angle_feature, dir_angle_feature_with_ele,
 )
@@ -194,7 +194,7 @@ class BaseVLNCETrainer(BaseILTrainer):
 
         Returns:
             None
-        """
+        """ # ;import pdb; pdb.set_trace()
         if self.local_rank < 1:
             logger.info(f"checkpoint_path: {checkpoint_path}")
 
@@ -257,7 +257,7 @@ class BaseVLNCETrainer(BaseILTrainer):
         observations = envs.reset()
         observations = extract_instruction_tokens(
             observations, self.config.TASK_CONFIG.TASK.INSTRUCTION_SENSOR_UUID
-        )
+        );
         batch = batch_obs(observations, self.device)
         batch = apply_obs_transforms_batch(batch, obs_transforms)
 
@@ -334,7 +334,7 @@ class BaseVLNCETrainer(BaseILTrainer):
                         in_train = False,
                     )
                     # navigation action logits
-                    logits, rnn_states = self.policy.net(
+                    logits, rnn_states, att = self.policy.net(
                         mode = 'navigation',
                         observations = batch,
                         instruction = instruction_embedding,
@@ -374,7 +374,8 @@ class BaseVLNCETrainer(BaseILTrainer):
                         in_train = False,
                     )
                     # navigation action logits
-                    logits, h_t = self.policy.net(
+                    # import pdb; pdb.set_trace()
+                    logits, h_t, att = self.policy.net(
                         mode = 'navigation',
                         observations=batch,
                         lang_masks=lang_masks,
@@ -421,11 +422,14 @@ class BaseVLNCETrainer(BaseILTrainer):
                 dtype=torch.uint8, device=self.device)
 
             # reset envs and observations if necessary
+            # import pdb; pdb.set_trace()
             for i in range(envs.num_envs):
                 if len(config.VIDEO_OPTION) > 0:
                     frame = observations_to_image(observations[i], infos[i])
                     frame = append_text_to_image(
-                        frame, current_episodes[i].instruction.instruction_text
+                        frame, current_episodes[i].instruction.instruction_text,
+                        attention=att if att is None else att["text_state"][i],
+                        task="r2r"
                     )
                     rgb_frames[i].append(frame)
 
@@ -490,11 +494,12 @@ class BaseVLNCETrainer(BaseILTrainer):
                             ]["spl"]
                         },
                         tb_writer=writer,
+                        fps=2
                     )
 
-                    del stats_episodes[current_episodes[i].episode_id][
-                        "top_down_map_vlnce"
-                    ]
+                    #del stats_episodes[current_episodes[i].episode_id][
+                    #    "top_down_map_vlnce"
+                    #]
                     del stats_episodes[current_episodes[i].episode_id][
                         "collisions"
                     ]
@@ -719,7 +724,7 @@ class BaseVLNCETrainer(BaseILTrainer):
         self.traj = self.collect_val_traj()
         with TensorboardWriter(
             self.config.TENSORBOARD_DIR, flush_secs=self.flush_secs
-        ) as writer:
+        ) as writer: 
             if os.path.isfile(self.config.EVAL_CKPT_PATH_DIR):
                 # evaluate singe checkpoint
                 proposed_index = get_checkpoint_id(

@@ -37,7 +37,6 @@ flag="--exp_name cont-cwp-vlnbert-ori
       SIMULATOR_GPU_IDS [0]
       TORCH_GPU_ID 0
       TORCH_GPU_IDS [0]
-      EVAL.SPLIT val_unseen
       EVAL_CKPT_PATH_DIR logs/checkpoints/cont-cwp-vlnbert-ori/vlnbert_ckpt_best.pth
       "
 python run.py $flag

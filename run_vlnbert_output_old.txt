@@ -1,0 +1,9 @@
+2022-10-30 14:04:17,077 Episodes evaluated: 1839
+2022-10-30 14:04:17,078 Average episode steps_taken: 9.257205
+2022-10-30 14:04:17,080 Average episode distance_to_goal: 5.747291
+2022-10-30 14:04:17,081 Average episode success: 0.440457
+2022-10-30 14:04:17,081 Average episode oracle_success: 0.529636
+2022-10-30 14:04:17,081 Average episode path_length: 12.256844
+2022-10-30 14:04:17,081 Average episode collisions: 0.071124
+2022-10-30 14:04:17,082 Average episode spl: 0.388776
+2022-10-30 14:04:17,082 Average episode ndtw: 0.539737

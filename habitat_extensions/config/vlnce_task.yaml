@@ -1,5 +1,6 @@
 ENVIRONMENT:
-  MAX_EPISODE_STEPS: 20
+  MAX_EPISODE_STEPS: 500
+  SHUFFLE: False
 SIMULATOR:
   ACTION_SPACE_CONFIG: v0
   AGENT_0:
@@ -28,7 +29,9 @@ TASK:
     SHORTEST_PATH_SENSOR,
     VLN_ORACLE_PROGRESS_SENSOR
   ]
+  # SENSOR: [RXR_INSTRUCTION_SENSOR]
   INSTRUCTION_SENSOR_UUID: instruction
+  # INSTRUCTION_SENSOR_UUID: rxr_instruction
   POSSIBLE_ACTIONS: [STOP, MOVE_FORWARD, TURN_LEFT, TURN_RIGHT, HIGHTOLOW]
   MEASUREMENTS: [
     # DISTANCE_TO_GOAL,
@@ -43,6 +46,9 @@ TASK:
     SUCCESS_DISTANCE: 3.0
   SPL:
     SUCCESS_DISTANCE: 3.0
+  # NDTW:
+  #   SUCCESS_DISTANCE: 3.0
+  #   GT_PATH: /home/ubuntu/VLN-CE/data/datasets/RxR_VLNCE_v0/{split}/{split}_guide_gt.json.gz
   NDTW:
     SUCCESS_DISTANCE: 3.0
     GT_PATH: data/datasets/R2R_VLNCE_v1-2_preprocessed/{split}/{split}_gt.json.gz
@@ -56,3 +62,11 @@ DATASET:
   SPLIT: train
   DATA_PATH: data/datasets/R2R_VLNCE_v1-2_preprocessed/{split}/{split}.json.gz
   SCENES_DIR: data/scene_datasets/
+
+# DATASET:
+#   TYPE: RxR-VLN-CE-v1
+#   SPLIT: train
+#   ROLES: [guide]  # "*", "guide", "follower"
+#   LANGUAGES: [en-US, en-IN]  #  "*", "te-IN", "hi-IN", "en-US", "en-IN"
+#   DATA_PATH: /home/ubuntu/VLN-CE/data/datasets/RxR_VLNCE_v0/{split}/{split}_{role}.json.gz
+#   SCENES_DIR: data/scene_datasets/

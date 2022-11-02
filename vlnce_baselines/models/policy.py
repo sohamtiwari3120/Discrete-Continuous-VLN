@@ -37,7 +37,7 @@ class ILPolicy(Policy, metaclass=abc.ABCMeta):
         print('need to revise for CMA and VLNBERT')
         import pdb; pdb.set_trace()
 
-        features, rnn_hidden_states = self.net(
+        features, rnn_hidden_states, att = self.net(
             observations, rnn_hidden_states, prev_actions, masks
         )
         distribution = self.action_distribution(features)
@@ -48,7 +48,7 @@ class ILPolicy(Policy, metaclass=abc.ABCMeta):
         else:
             action = distribution.sample()
 
-        return action, rnn_hidden_states
+        return action, rnn_hidden_states, att
 
     def get_value(self, *args: Any, **kwargs: Any):
         raise NotImplementedError
@@ -76,7 +76,7 @@ class ILPolicy(Policy, metaclass=abc.ABCMeta):
         print('need to revise for CMA and VLNBERT')
         import pdb; pdb.set_trace()
 
-        feature_rgb, feature_depth, rnn_hidden_states = self.net(
+        feature_rgb, feature_depth, rnn_hidden_states, att = self.net(
             observations, rnn_hidden_states, prev_actions, masks
         )
         distribution_rgb = self.action_distribution(feature_rgb)
@@ -89,4 +89,4 @@ class ILPolicy(Policy, metaclass=abc.ABCMeta):
         else:
             action = Categorical(probs).sample().unsqueeze(-1)
 
-        return action, rnn_hidden_states
+        return action, rnn_hidden_states, att

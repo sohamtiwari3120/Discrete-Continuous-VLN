@@ -287,7 +287,7 @@ def draw_mp3d_nodes(
     )
     starting_height = graph.nodes[n]["position"][1]
     for node in graph:
-        pos = graph.nodes[node]["position"]
+        pos = graph.nodes[node]["position"]; r_x, r_y = 0, 0
 
         # no obvious way to differentiate between floors. Use this for now.
         if abs(pos[1] - starting_height) < 1.0:

@@ -345,13 +345,19 @@ class VLNBERT(Net):
             attention_mask = torch.cat((
                 lang_masks, bert_candidate_mask), dim=-1)
 
-            h_t, logits = self.vln_bert('visual',
+            h_t, logits, language_att = self.vln_bert('visual',
                 state_feats,
                 attention_mask=attention_mask,
                 lang_mask=lang_masks, vis_mask=bert_candidate_mask,
                 img_feats=vis_in)
 
-            return logits, h_t
+            attention = {
+                # "text": text_attn.detach().cpu().numpy(), 
+                "text_state": None,
+                # "depth": depth_attn.detach().cpu().numpy()
+            }
+            
+            return logits, h_t, None
 
 
 class BertLayerNorm(nn.Module):

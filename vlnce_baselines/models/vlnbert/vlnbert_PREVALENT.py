@@ -440,5 +440,6 @@ class VLNBert(BertPreTrainedModel):
             pooled_output = self.pooler(sequence_output)
 
             visual_action_scores = visual_attention_scores.mean(dim=1)
+            language_attention_scores = language_attention_scores.mean(dim=1)
 
-            return pooled_output, visual_action_scores
+            return pooled_output, visual_action_scores, language_attention_scores

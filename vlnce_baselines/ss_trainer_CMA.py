@@ -200,7 +200,7 @@ class SSTrainer(BaseVLNCETrainer):
                     in_train = in_train,
                 )
                 # navigation action logits
-                logits, rnn_states = self.policy.net(
+                logits, rnn_states, _ = self.policy.net(
                     mode = 'navigation',
                     observations = batch,
                     instruction = language_features,
